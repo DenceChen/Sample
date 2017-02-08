@@ -1,0 +1,38 @@
+package com.github.sgwhp.openapm.sample;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+/**
+ * Created by chenqihong on 2017/2/8.
+ */
+
+public class LoanActivity extends Activity implements View.OnClickListener{
+
+    private Button mConfirmButton;
+    private Button mKeyButton1;
+    private Button mKeyButton2;
+    private Button mKeyButton3;
+    @Override
+    public void onCreate(Bundle savedInstaceState){
+        super.onCreate(savedInstaceState);
+        setContentView(R.layout.loan_activity);
+        mConfirmButton = (Button)findViewById(R.id.confirm);
+        mKeyButton1 = (Button)findViewById(R.id.key_button_1);
+        mKeyButton2 = (Button)findViewById(R.id.key_button_2);
+        mKeyButton3 = (Button)findViewById(R.id.key_button_3);
+        mConfirmButton.setOnClickListener(this);
+        mKeyButton1.setOnClickListener(this);
+        mKeyButton2.setOnClickListener(this);
+        mKeyButton3.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == mConfirmButton){
+            finish();
+        }
+    }
+}
