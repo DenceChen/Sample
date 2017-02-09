@@ -1,17 +1,20 @@
 package com.github.sgwhp.openapm.monitor;
 
+import com.github.sgwhp.openapm.monitor.data.KeyInfo;
 import com.github.sgwhp.openapm.monitor.data.KeyOperationBean;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
- * Created by chenqihong on 2017/2/8.
+ * Created by chenqihong on 2017/2/9.
  */
 
 public class KeyOperationHandler {
+    private LinkedList<KeyInfo> mBeanLinkedList = new LinkedList<>();
     private static KeyOperationHandler mInstance;
-    private List<KeyOperationBean> mBeanList = new ArrayList<>();
+
+    private Iterator<KeyInfo> mDescendingIterator;
 
     public static KeyOperationHandler getInstance(){
         if(null == mInstance){
@@ -25,11 +28,25 @@ public class KeyOperationHandler {
 
     }
 
-    public void addKeyOperation(KeyOperationBean bean){
-        mBeanList.add(bean);
+    public void refreshDescendingIterator(){
+        mDescendingIterator = mBeanLinkedList.descendingIterator();
     }
 
-    public List<KeyOperationBean> getOperationList(){
-        return mBeanList;
+    public KeyInfo nextDescendingElement(){
+        return mDescendingIterator.next();
     }
+
+    public boolean hasNext(){
+        return mDescendingIterator.hasNext();
+    }
+
+    public void addList(KeyInfo bean){
+        mBeanLinkedList.add(bean);
+    }
+
+    public void clear(){
+        mBeanLinkedList.clear();
+    }
+
+
 }

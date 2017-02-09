@@ -5,6 +5,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.github.sgwhp.openapm.monitor.data.KeyInfo;
+import com.github.sgwhp.openapm.monitor.data.KeyOperationBean;
+
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.File;
@@ -15,6 +18,10 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -33,8 +40,11 @@ public class Monitor {
     private volatile int writeIndex = 1;
     private volatile int readIndex = -writeIndex;
     private boolean debug;
+    private static MonitorConfig config;
 
-    private Monitor(){ }
+    private Monitor(){
+        config = new MonitorConfig();
+    }
 
     public static Monitor getInstance(){
         if(instance == null){
@@ -67,12 +77,34 @@ public class Monitor {
 
 
     public static void traceMethod(String className, String method, String opCode,Object[] localVar,Object[] args){
-        for(int i = 0; i < args.length; i ++){
-            if(args[i] instanceof View){
-                if(args[i] instanceof Button){
-                    Button button = (Button) args[i];
-                    Log.d("asm", "[asm] trace button :" + button.getText());
-                }
+        config = new MonitorConfig();
+        for(int i = 0; i < args.length; i++){
+            if(args[i] instanceof Button){
+                Button button = (Button) args[i];
+                KeyInfo keyInfo = new KeyInfo();
+                keyInfo.setKeyName(button.getText().toString());
+                Date now = new Date();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                String currentTime = dateFormat.format( now );
+                keyInfo.setTime(currentTime);
+                KeyOperationHandler.getInstance().addList(keyInfo);
+                checkFinished(button.getText().toString());
+            }
+        }
+    }
+
+    private static void checkFinished(String text){
+        KeyOperationBean bean = config.getBean();
+        if(bean == null){
+            return;
+        }
+
+        Iterator<String> i = bean.getKeyToFinished().iterator();
+        while(i.hasNext()){
+            String key = i.next();
+            if(text.equals(key)){
+                Harvest harvest = new Harvest();
+                harvest.logKeys(config);
             }
         }
     }

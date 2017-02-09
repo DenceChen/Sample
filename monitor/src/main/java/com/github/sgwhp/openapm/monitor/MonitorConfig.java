@@ -2,8 +2,11 @@ package com.github.sgwhp.openapm.monitor;
 
 import com.github.sgwhp.openapm.monitor.data.KeyOperationBean;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,25 +18,30 @@ import java.util.Properties;
  */
 
 public class MonitorConfig {
+    private KeyOperationBean mBean;
+    private boolean isConfigLoaded;
     public MonitorConfig(){
         Map<String, String> properties = parseProperties();
         if(null == properties){
             return;
         }
 
-        KeyOperationBean bean = new KeyOperationBean();
-        bean.setTargetPacket(parseTarget(properties.get("targetPacket")));
-        bean.setTargetPage(parseTarget(properties.get("targetActivity")));
-        bean.addKeysToNameList(parseKeys(properties.get("keys")));
-        bean.addKeysToKeyToCheckList(parseKeys(properties.get("keysToCheck")));
+        mBean = new KeyOperationBean();
+        mBean.addKeyToStart(parseKeys(properties.get("keyToStart")));
+        mBean.addKeys(parseKeys(properties.get("keys")));
+        mBean.addKeyToFinished(parseKeys(properties.get("keyToFinish")));
     }
 
-    private String parseTarget(String packet){
-        return packet;
+    public KeyOperationBean getBean() {
+        return mBean;
+    }
+
+    public void setBean(KeyOperationBean bean) {
+        this.mBean = bean;
     }
 
     private List<String> parseKeys(String keys){
-        String[] keyGroup = keys.split("|");
+        String[] keyGroup = keys.split("\\|");
         List<String> keyList = new ArrayList<>();
         for(int i = 0; i < keyGroup.length; i++){
             keyList.add(keyGroup[i]);
@@ -43,16 +51,22 @@ public class MonitorConfig {
     }
 
     private Map parseProperties(){
-        Properties properties = new Properties();
-        URL url = MonitorConfig.class.getResource("/config.properties");
-        if(url == null){
+        if(isConfigLoaded){
             return null;
         }
 
-        InputStream is = null;
+        isConfigLoaded = true;
+
+        Properties properties = new Properties();
+
+        InputStreamReader is = null;
         try{
-            is = url.openStream();
-            properties.load(is);
+            is = new InputStreamReader(MonitorConfig.class.getResourceAsStream("/assets/config.properties"), "UTF-8") ;
+            if(null == is){
+                return null;
+            }
+            BufferedReader br = new BufferedReader(is);
+            properties.load(br);
         }catch (Exception e){
             e.printStackTrace();
         }finally {

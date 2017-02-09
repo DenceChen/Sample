@@ -5,7 +5,10 @@ package com.github.sgwhp.openapm.monitor.data;
  */
 
 public class KeyInfo {
+    public static int KEY_OP_OPEN = 0;
+    public static int KEY_OP_CLICK = 1;
     private String keyName;
+    private int operationCode;
     private String time;
     private boolean isEmulator;
     private boolean hasHooked;
@@ -40,5 +43,13 @@ public class KeyInfo {
 
     public void setHasHooked(boolean hasHooked) {
         this.hasHooked = hasHooked;
+    }
+
+    public int getOperationCode() {
+        return operationCode;
+    }
+
+    public void setOperationCode(int operationCode) {
+        this.operationCode = operationCode;
     }
 }

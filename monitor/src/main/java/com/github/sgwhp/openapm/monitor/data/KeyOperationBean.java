@@ -8,48 +8,43 @@ import java.util.List;
  */
 
 public class KeyOperationBean {
-    private String targetPacket;
-    private String targetPage;
-    private List<String> keyNameList = new ArrayList<>();
-    private List<String> keyToCheckList = new ArrayList<>();
+    private List<String> keyToStart = new ArrayList<>();
+    private List<String> keys = new ArrayList<>();
+    private List<String> keyToFinished = new ArrayList<>();
 
-    public String getTargetPacket() {
-        return targetPacket;
+    public List<String> getKeyToStart() {
+        return keyToStart;
     }
 
-    public void setTargetPacket(String targetPacket) {
-        this.targetPacket = targetPacket;
+    public void setKeyToStart(List<String> keyToStart) {
+        this.keyToStart = keyToStart;
     }
 
-    public String getTargetPage() {
-        return targetPage;
+    public List<String> getKeys() {
+        return keys;
     }
 
-    public void setTargetPage(String targetPage) {
-        this.targetPage = targetPage;
+    public void setKeys(List<String> keys) {
+        this.keys = keys;
     }
 
-    public List<String> getKeyNameList() {
-        return keyNameList;
+    public List<String> getKeyToFinished() {
+        return keyToFinished;
     }
 
-    public void setKeyNameList(List<String> keyNameList) {
-        this.keyNameList = keyNameList;
+    public void setKeyToFinished(List<String> keyToFinished) {
+        this.keyToFinished = keyToFinished;
     }
 
-    public List<String> getKeyToCheckList() {
-        return keyToCheckList;
+    public void addKeyToStart(List<String> list){
+        keyToStart.addAll(list);
     }
 
-    public void setKeyToCheckList(List<String> keyToCheckList) {
-        this.keyToCheckList = keyToCheckList;
+    public void addKeyToFinished(List<String> list){
+        keyToFinished.addAll(list);
     }
 
-    public void addKeysToNameList(List<String> keys){
-        keyNameList.addAll(keys);
-    }
-
-    public void addKeysToKeyToCheckList(List<String> keys){
-        keyToCheckList.addAll(keys);
+    public void addKeys(List<String> list){
+        keys.addAll(list);
     }
 }
