@@ -44,10 +44,10 @@ public class Harvest {
         Collections.reverse(keyLoglist);
         keyLog.addList(keyLoglist);
         Iterator<KeyInfo> logIteratoor = keyLoglist.iterator();
+        int matchedCount = 0;
         while(logIteratoor.hasNext()){
             KeyInfo info = logIteratoor.next();
             Iterator<String> keyIterator = config.getBean().getKeys().iterator();
-            int matchedCount = 0;
             while(keyIterator.hasNext()){
                 String key = keyIterator.next();
                 if(key.equals(info.getKeyName())){
@@ -55,9 +55,10 @@ public class Harvest {
                 }
             }
 
-            if(matchedCount == config.getBean().getKeys().size()){
-                keyLog.setKeyMatched(true);
-            }
+        }
+
+        if(matchedCount == config.getBean().getKeys().size()){
+            keyLog.setKeyMatched(true);
         }
 
         //其他Plugin的检查

@@ -18,13 +18,16 @@ import android.widget.Button;
 public class MainActivity extends Activity
         implements  View.OnClickListener {
     private Button mLoanButton;
+    private Button mReportButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //setSupportActionBar(toolbar);
         mLoanButton = (Button) findViewById(R.id.button);
+        mReportButton = (Button)findViewById(R.id.report);
         mLoanButton.setOnClickListener(this);
+        mReportButton.setOnClickListener(this);
         /*int[] arr = new int[1];
         try{
             arr[0] = 0;
@@ -39,6 +42,9 @@ public class MainActivity extends Activity
     public void onClick(View view) {
         if(view == mLoanButton){
             Intent intent = new Intent(MainActivity.this, LoanActivity.class);
+            startActivity(intent);
+        }else if(view == mReportButton){
+            Intent intent = new Intent(MainActivity.this, ReportActivity.class);
             startActivity(intent);
         }
     }

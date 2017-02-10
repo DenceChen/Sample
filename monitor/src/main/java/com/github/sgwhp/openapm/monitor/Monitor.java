@@ -76,17 +76,14 @@ public class Monitor {
     }
 
 
-    public static void traceMethod(String className, String method, String opCode,Object[] localVar,Object[] args){
+    public static void traceMethod(String className, String method, String opCode,Object[] localVar, Object[] args){
         config = new MonitorConfig();
         for(int i = 0; i < args.length; i++){
             if(args[i] instanceof Button){
                 Button button = (Button) args[i];
                 KeyInfo keyInfo = new KeyInfo();
                 keyInfo.setKeyName(button.getText().toString());
-                Date now = new Date();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                String currentTime = dateFormat.format( now );
-                keyInfo.setTime(currentTime);
+                keyInfo.setTime(System.currentTimeMillis() + "");
                 KeyOperationHandler.getInstance().addList(keyInfo);
                 checkFinished(button.getText().toString());
             }
