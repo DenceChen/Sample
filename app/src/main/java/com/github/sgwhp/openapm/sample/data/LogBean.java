@@ -10,6 +10,8 @@ import java.util.List;
 public class LogBean {
     private List<KeyInfo> keyInfoList = new ArrayList<>();
     private boolean keyMatched;
+    private boolean isEmulator;
+    private boolean hasHooked;
 
     public List<KeyInfo> getKeyInfoList() {
         return keyInfoList;
@@ -29,5 +31,21 @@ public class LogBean {
 
     public void setKeyMatched(boolean keyMatched) {
         this.keyMatched = keyMatched;
+    }
+
+    public boolean isEmulator() {
+        return isEmulator;
+    }
+
+    public void setEmulator(boolean emulator) {
+        isEmulator = emulator;
+    }
+
+    public boolean isHasHooked() {
+        return hasHooked;
+    }
+
+    public void setHasHooked(boolean hasHooked) {
+        this.hasHooked = hasHooked;
     }
 }

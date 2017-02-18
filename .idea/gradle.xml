@@ -8,6 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/antiemulator" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/monitor" />
           </set>

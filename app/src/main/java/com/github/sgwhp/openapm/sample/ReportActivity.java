@@ -30,6 +30,7 @@ public class ReportActivity extends Activity {
         if(null != mKeyLog) {
             mReportText.setText(showLog());
         }
+
     }
 
     private String showLog(){
@@ -51,8 +52,8 @@ public class ReportActivity extends Activity {
             if(!(i.hasNext())){
                 sb.append("\n\n").append("耗时： ").append((Long.parseLong(keyInfo.getTime()) - startTime)/1000 + "秒");
                 sb.append("\n").append("操作合规：").append(mKeyLog.isKeyMatched() == true? "是" : "否");
-                sb.append("\n").append("模拟器：").append(keyInfo.isEmulator()== true? "是" : "否");
-                sb.append("\n").append("附着：").append(keyInfo.isHasHooked() == true? "是" : "否");
+                sb.append("\n").append("模拟器：").append(mKeyLog.isEmulator()== true? "是" : "否");
+                sb.append("\n").append("附着：").append(mKeyLog.isHasHooked() == true? "是" : "否");
             }
         }
 

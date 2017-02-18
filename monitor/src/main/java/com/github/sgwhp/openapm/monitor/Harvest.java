@@ -1,11 +1,14 @@
 package com.github.sgwhp.openapm.monitor;
 
+import android.content.Context;
 import android.os.Environment;
 
 import com.github.sgwhp.openapm.monitor.data.KeyInfo;
 import com.github.sgwhp.openapm.monitor.data.KeyLog;
 import com.github.sgwhp.openapm.monitor.data.KeyOperationBean;
 import com.google.gson.Gson;
+import com.mucfc.antiemulator.controller.EmulatorPattern;
+import com.mucfc.antiemulator.controller.GeneralDetector;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -40,7 +43,7 @@ public class Harvest {
     }
 
     private void harvest(List<KeyInfo> keyLoglist, MonitorConfig config){
-        KeyLog keyLog = new KeyLog();
+        final KeyLog keyLog = new KeyLog();
         Collections.reverse(keyLoglist);
         keyLog.addList(keyLoglist);
         Iterator<KeyInfo> logIteratoor = keyLoglist.iterator();
@@ -62,8 +65,20 @@ public class Harvest {
         }
 
         //其他Plugin的检查
+        Context context = Utils.getContextHolder();
+        GeneralDetector detector = new GeneralDetector(context);
+        detector.setEmulatorCheckedListener(new GeneralDetector.EmulatorCheckedListener() {
+            @Override
+            public void onChecked(boolean[] status) {
 
-        endAndLog(keyLog);
+                keyLog.setEmulator(EmulatorPattern.recognize(status));
+                endAndLog(keyLog);
+
+            }
+        });
+
+        detector.startChecking();
+
     }
 
     private void endAndLog(KeyLog keyLog){

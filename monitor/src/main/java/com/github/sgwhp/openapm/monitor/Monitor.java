@@ -76,7 +76,7 @@ public class Monitor {
     }
 
 
-    public static void traceMethod(String className, String method, String opCode,Object[] localVar, Object[] args){
+    public static void traceMethod(String className, String method, String opCode, String hello, Object[] localVar, Object[] args){
         config = new MonitorConfig();
         for(int i = 0; i < args.length; i++){
             if(args[i] instanceof Button){
