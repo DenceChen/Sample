@@ -6,7 +6,7 @@
     android:layout_marginRight="15dp"
     android:layout_marginTop="15dp">
     <TextView
-        android:id="@+id/report"
+        android:id="@+id/report_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

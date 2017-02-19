@@ -25,7 +25,7 @@ public class ReportActivity extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
-        mReportText = (TextView)findViewById(R.id.report);
+        mReportText = (TextView)findViewById(R.id.report_text);
         readFromLog();
         if(null != mKeyLog) {
             mReportText.setText(showLog());

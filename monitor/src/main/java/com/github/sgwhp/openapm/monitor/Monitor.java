@@ -22,13 +22,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * Created by wuhongping on 15-12-3.
- */
 public class Monitor {
     private static volatile Monitor instance;
     private final Executor executor = Executors.newSingleThreadExecutor();
@@ -77,6 +75,7 @@ public class Monitor {
 
 
     public static void traceMethod(String className, String method, String opCode, String hello, Object[] localVar, Object[] args){
+        Log.d("traceMethod", hello + "");
         config = new MonitorConfig();
         for(int i = 0; i < args.length; i++){
             if(args[i] instanceof Button){
@@ -104,6 +103,10 @@ public class Monitor {
                 harvest.logKeys(config);
             }
         }
+    }
+
+    public static void getReturn(Object returnValue){
+        Log.d("return", returnValue.toString());
     }
 
     public static void startTracing(Throwable throwable){

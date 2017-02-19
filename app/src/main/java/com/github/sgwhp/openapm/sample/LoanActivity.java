@@ -17,6 +17,7 @@ public class LoanActivity extends BaseActivity<String> implements View.OnClickLi
     private Button mKeyButton2;
     private Button mKeyButton3;
     private String tag = "hello world";
+    private int count;
     @Override
     public void onCreate(Bundle savedInstaceState){
         super.onCreate(savedInstaceState);
@@ -33,7 +34,8 @@ public class LoanActivity extends BaseActivity<String> implements View.OnClickLi
 
             @Override
             public void onClick(View view) {
-                Log.d("hello", hello);
+                setHello("hello" + (count ++));
+                Log.d("hello", getHello());
             }
         });
     }

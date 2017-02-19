@@ -9,5 +9,13 @@ import java.util.ArrayList;
  */
 
 public class BaseActivity<T> extends Activity{
-    protected String hello = "hello world";
+    protected String hello;
+
+    public String getHello() {
+        return hello;
+    }
+
+    public void setHello(String hello) {
+        this.hello = hello;
+    }
 }
