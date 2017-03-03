@@ -22,11 +22,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Created by wuhongping on 15-12-3.
+ */
 public class Monitor {
     private static volatile Monitor instance;
     private final Executor executor = Executors.newSingleThreadExecutor();
@@ -38,6 +40,7 @@ public class Monitor {
     private volatile int writeIndex = 1;
     private volatile int readIndex = -writeIndex;
     private boolean debug;
+    private boolean isInit;
     private static MonitorConfig config;
 
     private Monitor(){
@@ -54,6 +57,7 @@ public class Monitor {
         }
         return instance;
     }
+
 
     public void start(Context context){
         CrashHandler.getInstance().init();
@@ -74,9 +78,8 @@ public class Monitor {
     }
 
 
-    public static void traceMethod(String className, String method, String opCode, String hello, Object[] localVar, Object[] args){
-        Log.d("traceMethod", hello + "");
-        config = new MonitorConfig();
+    public static void traceMethod(Object returnValue, String className, String method, String opCode, Object[] fields, Object[] localVar, Object[] args){
+        /*config = new MonitorConfig();
         for(int i = 0; i < args.length; i++){
             if(args[i] instanceof Button){
                 Button button = (Button) args[i];
@@ -86,7 +89,33 @@ public class Monitor {
                 KeyOperationHandler.getInstance().addList(keyInfo);
                 checkFinished(button.getText().toString());
             }
+        }*/
+        StringBuilder sb = new StringBuilder();
+        sb.append("Class Name: " + className + " ");
+        sb.append("Method Name: " + method + " ");
+        if(returnValue != null){
+            sb.append("Return Value: " + returnValue+ " ");
         }
+
+        if(fields != null) {
+            for (int i = 0; i < fields.length; i++) {
+                sb.append("Field Value: " + fields[i] + " ");
+            }
+
+        }
+
+        if(localVar != null){
+            for (int i = 0; i < localVar.length; i++) {
+                sb.append("Local Value: " + localVar[i]+ " ");
+            }
+        }
+
+        if(args != null){
+            for (int i = 0; i < args.length; i++) {
+                sb.append("Arg Value: " + args[i]+ " ");
+            }
+        }
+        Log.d("ASM", "[asm]" + sb.toString());
     }
 
     private static void checkFinished(String text){
@@ -103,10 +132,6 @@ public class Monitor {
                 harvest.logKeys(config);
             }
         }
-    }
-
-    public static void getReturn(Object returnValue){
-        Log.d("return", returnValue.toString());
     }
 
     public static void startTracing(Throwable throwable){

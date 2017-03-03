@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 
 public class BaseActivity<T> extends Activity{
-    protected String hello;
+    protected String hello = "hello world";
 
     public String getHello() {
         return hello;

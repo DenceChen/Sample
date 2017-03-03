@@ -15,6 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+
 public class MainActivity extends BaseActivity<String>
         implements  View.OnClickListener {
     private Button mLoanButton;
@@ -36,6 +39,7 @@ public class MainActivity extends BaseActivity<String>
         } catch(IndexOutOfBoundsException e){
             System.out.println("oops");
         }*/
+        OkHttpClient client = new OkHttpClient();
     }
 
     @Override
@@ -48,4 +52,11 @@ public class MainActivity extends BaseActivity<String>
             startActivity(intent);
         }
     }
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+
+        }
+    };
 }
