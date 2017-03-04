@@ -2,6 +2,7 @@ package com.github.sgwhp.openapm.sample;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,5 +47,6 @@ public class LoanActivity extends BaseActivity<String> implements View.OnClickLi
         if(view == mConfirmButton){
             finish();
         }
+
     }
 }
