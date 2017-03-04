@@ -1,6 +1,8 @@
 package com.github.sgwhp.openapm.monitor.okHttp2;
 
+import com.github.sgwhp.openapm.monitor.TransactionData;
 import com.github.sgwhp.openapm.monitor.TransactionState;
+import com.github.sgwhp.openapm.monitor.TransactionStateUtil;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -59,6 +61,7 @@ public class CallExtension extends Call {
     private TransactionState getTransactionState(){
         if(null == mTransactionState){
             mTransactionState = new TransactionState();
+            OkHttp2TransactionStateUtil.inspactAndInstrument(mTransactionState, mRequest);
 
         }
 
@@ -66,10 +69,24 @@ public class CallExtension extends Call {
     }
 
     private void error(Exception e){
+        TransactionState transactionState = this.getTransactionState();
+        TransactionStateUtil.setErrorCodeFromException(transactionState, e);
+        if(!transactionState.isComplete()) {
+            TransactionData transactionData = transactionState.end();
+            if(transactionData != null) {
+                //TaskQueue.queue(new HttpTransactionMeasurement(transactionData.getUrl(), transactionData.getHttpMethod(), transactionData.getStatusCode(), transactionData.getErrorCode(), transactionData.getTimestamp(), (double)transactionData.getTime(), transactionData.getBytesSent(), transactionData.getBytesReceived(), transactionData.getAppData()));
+            }
+        }
+
 
     }
 
     private Response checkResponse(Response response){
+        if(getTransactionState().isComplete()){
+            response = OkHttp2TransactionStateUtil.
+                    inspectAndInstrumentResponse(getTransactionState(), response);
+        }
+
         return response;
     }
 }

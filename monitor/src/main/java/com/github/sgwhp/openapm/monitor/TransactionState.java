@@ -6,7 +6,7 @@ package com.github.sgwhp.openapm.monitor;
 
 public class TransactionState {
     private String url;
-    private String htttpMethod;
+    private String httpMethod;
     private int statusCode;
     private int errorCode;
     private long bytesSent;
@@ -40,13 +40,13 @@ public class TransactionState {
         }
     }
 
-    public String getHtttpMethod() {
-        return htttpMethod;
+    public String getHttpMethod() {
+        return httpMethod;
     }
 
-    public void setHtttpMethod(String htttpMethod) {
+    public void setHttpMethod(String htttpMethod) {
         if(!isSent()) {
-            this.htttpMethod = htttpMethod;
+            this.httpMethod = htttpMethod;
         }
     }
 
@@ -154,7 +154,7 @@ public class TransactionState {
 
     private TransactionData toTransactionData(){
         completedData = new TransactionData(url,
-                htttpMethod,
+                httpMethod,
                 carrier,
                 (float)(this.endTime - this.startTime) / 1000.0F,
                 statusCode,

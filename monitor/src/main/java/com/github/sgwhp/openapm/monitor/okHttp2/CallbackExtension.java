@@ -1,6 +1,8 @@
 package com.github.sgwhp.openapm.monitor.okHttp2;
 
+import com.github.sgwhp.openapm.monitor.TransactionData;
 import com.github.sgwhp.openapm.monitor.TransactionState;
+import com.github.sgwhp.openapm.monitor.TransactionStateUtil;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -34,10 +36,26 @@ public class CallbackExtension implements Callback {
     }
 
     private Response checkResponse(Response response){
+        if(! getTransactionState().isComplete()){
+            response = OkHttp2TransactionStateUtil.
+                    inspectAndInstrumentResponse(getTransactionState(), response);
+        }
         return response;
     }
 
+    private TransactionState getTransactionState(){
+        return mTransactionState;
+    }
+
     private void error(Exception e){
+        TransactionState transactionState = getTransactionState();
+        TransactionStateUtil.setErrorCodeFromException(transactionState, e);
+        if(!transactionState.isComplete()){
+            TransactionData transactionData = transactionState.end();
+            if(transactionData != null){
+                //TaskQueue
+            }
+        }
 
     }
 }

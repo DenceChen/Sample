@@ -22,10 +22,18 @@ public class TransactionStateUtil {
     public static final int MUURLErrorSecureConnectionFailed = -1200;
     public static void inspectAndInstrument(TransactionState transactionState, HttpURLConnection conn){
         transactionState.setUrl(conn.getURL().toString());
-        transactionState.setHtttpMethod(conn.getRequestMethod());
+        transactionState.setHttpMethod(conn.getRequestMethod());
         transactionState.setCarrier("test");
         transactionState.setWanType("WiFi");
     }
+
+    public static void inspectAndInstrument(TransactionState transactionState, String url, String httpMethod) {
+        transactionState.setUrl(url);
+        transactionState.setHttpMethod(httpMethod);
+        transactionState.setCarrier("test");
+        transactionState.setWanType("WiFi");
+    }
+
     public static void inspectAndInstrumentResponse(TransactionState transactionState, HttpURLConnection conn){
         int contentLength = conn.getContentLength();
         if(contentLength >= 0){
@@ -39,6 +47,15 @@ public class TransactionStateUtil {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        transactionState.setStatusCode(statusCode);
+    }
+
+    public static void inspectAndInstrumentResponse(TransactionState transactionState, int contentLength, int statusCode) {
+
+        if(contentLength >= 0) {
+            transactionState.setBytesReceived((long)contentLength);
         }
 
         transactionState.setStatusCode(statusCode);
