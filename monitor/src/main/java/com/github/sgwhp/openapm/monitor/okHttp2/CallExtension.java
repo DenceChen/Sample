@@ -22,7 +22,6 @@ public class CallExtension extends Call {
     protected CallExtension(OkHttpClient client, Request request, Call call) {
         super(client, request);
         mRequest = request;
-        mCall = call;
     }
 
     @Override
@@ -31,7 +30,7 @@ public class CallExtension extends Call {
         Response response = null;
 
         try{
-            response = mCall.execute();
+            response = super.execute();
         }catch (IOException e){
             error(e);
             throw e;
@@ -43,7 +42,7 @@ public class CallExtension extends Call {
     @Override
     public void enqueue(Callback responseCallback){
         getTransactionState();
-        mCall.enqueue(new CallbackExtension(responseCallback, mTransactionState));
+        super.enqueue(new CallbackExtension(responseCallback, mTransactionState));
     }
 
     @Override

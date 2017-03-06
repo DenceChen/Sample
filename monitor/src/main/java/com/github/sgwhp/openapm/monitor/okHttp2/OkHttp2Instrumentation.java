@@ -23,10 +23,10 @@ public class OkHttp2Instrumentation {
     }
 
     public static Call newCall(OkHttpClient client, Request request){
-        return new CallExtension(client, request, client.newCall(request));
+        return new CallExtension(client, request, null);
     }
 
-    public static Response.Builder body(Response.Builder builder){
+    public static Response.Builder newBuilder(Response.Builder builder){
         return new ResponseBuilderExtension(builder);
     }
 }

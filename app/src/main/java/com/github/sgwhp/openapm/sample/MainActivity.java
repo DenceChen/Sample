@@ -14,9 +14,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
 
 public class MainActivity extends BaseActivity<String>
         implements  View.OnClickListener {
@@ -39,10 +44,26 @@ public class MainActivity extends BaseActivity<String>
         } catch(IndexOutOfBoundsException e){
             System.out.println("oops");
         }*/
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
+        final OkHttpClient client = new OkHttpClient();
+        final Request request = new Request.Builder()
                 .url("http://baidu.com").build();
-        client.newCall(request);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                    client.newCall(request).enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Request request, IOException e) {
+                            Toast.makeText(MainActivity.this, "failed", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onResponse(Response response) throws IOException {
+                            Toast.makeText(MainActivity.this, "successed", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+            }
+        }).start();
     }
 
     @Override

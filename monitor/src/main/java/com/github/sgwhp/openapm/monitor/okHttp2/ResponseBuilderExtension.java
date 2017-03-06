@@ -21,52 +21,51 @@ public class ResponseBuilderExtension extends Response.Builder {
     Response.Builder mBuilder;
     public ResponseBuilderExtension(Response.Builder builder){
 
-        mBuilder = builder;
     }
 
     @Override
     public Response.Builder request(Request request){
-        return mBuilder.request(request);
+        return super.request(request);
     }
 
     @Override
     public Response.Builder protocol(Protocol protocol){
-        return mBuilder.protocol(protocol);
+        return super.protocol(protocol);
     }
 
     @Override
     public Response.Builder code(int code){
-        return mBuilder.code(code);
+        return super.code(code);
     }
 
     @Override
     public Response.Builder message(String message){
-        return mBuilder.message(message);
+        return super.message(message);
     }
 
     @Override
     public Response.Builder handshake(Handshake handshake){
-        return mBuilder.handshake(handshake);
+        return super.handshake(handshake);
     }
 
     @Override
     public Response.Builder header(String name, String value){
-        return mBuilder.header(name, value);
+        return super.header(name, value);
     }
 
     @Override
     public Response.Builder addHeader(String name, String value){
-        return mBuilder.addHeader(name, value);
+        return super.addHeader(name, value);
     }
 
     @Override
     public Response.Builder removeHeader(String name){
-        return mBuilder.removeHeader(name);
+        return super.removeHeader(name);
     }
 
     @Override
     public Response.Builder headers(Headers headers){
-        return mBuilder.headers(headers);
+        return super.headers(headers);
     }
 
     @Override
@@ -78,7 +77,7 @@ public class ResponseBuilderExtension extends Response.Builder {
                 if (null != e) {
                     Buffer buffer = new Buffer();
                     e.readAll(buffer);
-                    return mBuilder.body(new PreBufferedRepsonseBody(body, buffer));
+                    return super.body(new PreBufferedRepsonseBody(body, buffer));
                 }
             }
         }catch (IOException e){
@@ -87,26 +86,26 @@ public class ResponseBuilderExtension extends Response.Builder {
 
         }
 
-        return mBuilder.body(body);
+        return super.body(body);
     }
 
     @Override
     public Response.Builder networkResponse(Response networkResponse){
-        return mBuilder.networkResponse(networkResponse);
+        return super.networkResponse(networkResponse);
     }
 
     @Override
     public Response.Builder cacheResponse(Response cacheReponse){
-        return mBuilder.cacheResponse(cacheReponse);
+        return super.cacheResponse(cacheReponse);
     }
 
     @Override
     public Response.Builder priorResponse(Response priorResponse){
-        return mBuilder.priorResponse(priorResponse);
+        return super.priorResponse(priorResponse);
     }
 
     @Override
     public Response build(){
-        return mBuilder.build();
+        return super.build();
     }
 }
