@@ -40,6 +40,9 @@ public class MainActivity extends BaseActivity<String>
             System.out.println("oops");
         }*/
         OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url("http://baidu.com").build();
+        client.newCall(request);
     }
 
     @Override

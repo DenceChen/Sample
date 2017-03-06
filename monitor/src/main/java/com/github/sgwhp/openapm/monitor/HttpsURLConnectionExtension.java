@@ -1,9 +1,9 @@
 package com.github.sgwhp.openapm.monitor;
 
-import com.mucfc.monitor.io.CountingInputStream;
-import com.mucfc.monitor.io.CountingOutputStream;
-import com.mucfc.monitor.io.StreamCompleteEvent;
-import com.mucfc.monitor.io.StreamCompleteListener;
+import com.github.sgwhp.openapm.monitor.io.CountingInputStream;
+import com.github.sgwhp.openapm.monitor.io.CountingOutputStream;
+import com.github.sgwhp.openapm.monitor.io.StreamCompleteEvent;
+import com.github.sgwhp.openapm.monitor.io.StreamCompleteListener;
 
 import java.io.IOException;
 import java.io.InputStream;

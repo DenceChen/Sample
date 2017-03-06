@@ -17,12 +17,10 @@ import java.io.IOException;
 
 public class CallExtension extends Call {
     private TransactionState mTransactionState;
-    private OkHttpClient mClient;
     private Request mRequest;
     private Call mCall;
     protected CallExtension(OkHttpClient client, Request request, Call call) {
         super(client, request);
-        mClient = client;
         mRequest = request;
         mCall = call;
     }
